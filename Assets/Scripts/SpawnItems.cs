@@ -7,6 +7,8 @@ public class SpawnItems : MonoBehaviour
 {
     [SerializeField] private GameObject goalTile;
     [SerializeField] private Tilemap tm;
+    [SerializeField] private Transform tileGroup;
+    [SerializeField] private Transform itemGroup;
     //[SerializeField] private TileBase newTile;
 
 
