@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Goal
+  - Light
+  - Key
+  - Lock
   layers:
   - Default
   - TransparentFX
@@ -13,8 +16,8 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
-  - 
+  - Path
+  - Light
   - 
   - 
   - 
@@ -47,6 +50,9 @@ TagManager:
     locked: 0
   - name: Map
     uniqueID: 2081157407
+    locked: 0
+  - name: Lock
+    uniqueID: 2682901855
     locked: 0
   - name: Overlay
     uniqueID: 4022246479

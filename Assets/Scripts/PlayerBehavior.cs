@@ -6,6 +6,7 @@ public class PlayerBehavior : MonoBehaviour
 {
     [SerializeField] private UIBehavior uibehavior;
     public float speed = 2.5f;
+    public int keynum = 0;
     private float XTrans;
     private float YTrans;
     private bool goalReached = false;
@@ -33,10 +34,25 @@ public class PlayerBehavior : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if(col.gameObject.tag == "Key")
+        {
+            keynum++;
+            Destroy(col.gameObject);
+        }
         if(col.gameObject.tag == "Goal")
         {
             goalReached = true;
             uibehavior.activateGoalUI();
+        }
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Lock" && keynum >= 1)
+        {
+            keynum--;
+            Destroy(col.gameObject);
         }
     }
 }

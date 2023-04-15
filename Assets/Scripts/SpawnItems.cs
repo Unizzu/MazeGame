@@ -5,7 +5,12 @@ using UnityEngine.Tilemaps;
 
 public class SpawnItems : MonoBehaviour
 {
+    [SerializeField] private Transform player;
     [SerializeField] private GameObject goalTile;
+    [SerializeField] private GameObject pathTile;
+    [SerializeField] private GameObject blockTile;
+    [SerializeField] private GameObject key;
+    [SerializeField] private GameObject lockTile;
     [SerializeField] private Tilemap tm;
     [SerializeField] private Transform tileGroup;
     [SerializeField] private Transform itemGroup;
@@ -35,14 +40,54 @@ public class SpawnItems : MonoBehaviour
             for (int y = StartPos.y; y >= EndPos.y; y--)
             {
                 TileBase tile = tm.GetTile(new Vector3Int(x, y, 0));
+                
                 if (tile != null)
                 {
-                    if (tile.name == "goal 1")
+                    string tileName = tile.name;
+                    /*if (tile.name == "goal 1")
                     {
                         //Debug.Log("x:" + x + " y:" + y + " tile:" + tile.name);
                         SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
                         Instantiate(goalTile, SpawnPos, Quaternion.identity);
                         tm.SetTile(new Vector3Int(x, y, 0), null);
+                    }*/
+                    switch (tileName)
+                    {
+                        case "player":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            player.position = SpawnPos;
+                            break;
+                        case "goal 1":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(goalTile, SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "tile 1":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(blockTile, SpawnPos, Quaternion.identity, tileGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "path":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "key":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
+                            Instantiate(key, SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "locktile":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
+                            Instantiate(lockTile, SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
