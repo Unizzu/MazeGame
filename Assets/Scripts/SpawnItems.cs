@@ -6,6 +6,8 @@ using UnityEngine.Tilemaps;
 public class SpawnItems : MonoBehaviour
 {
     [SerializeField] private Transform player;
+    [SerializeField] private GameObject loadStart;
+    [SerializeField] private GameObject loadEnd;
     [SerializeField] private GameObject goalTile;
     [SerializeField] private GameObject pathTile;
     [SerializeField] private GameObject blockTile;
@@ -17,13 +19,15 @@ public class SpawnItems : MonoBehaviour
     //[SerializeField] private TileBase newTile;
 
 
-    private Vector3Int StartPos = new Vector3Int(-12, 4, 0);
-    private Vector3Int EndPos = new Vector3Int(11, -5, 0);
+    private Vector3Int StartPos;
+    private Vector3Int EndPos;
     private Vector3 SpawnPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        StartPos = tm.WorldToCell(loadStart.transform.position);
+        EndPos = tm.WorldToCell(loadEnd.transform.position);
         Spawn();
     }
 
