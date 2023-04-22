@@ -19,12 +19,12 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene("Stage 1");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
     void ButtonClicked()
     {
-        SceneManager.LoadScene("Stage 1");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

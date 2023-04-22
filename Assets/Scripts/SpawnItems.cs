@@ -13,6 +13,8 @@ public class SpawnItems : MonoBehaviour
     [SerializeField] private GameObject blockTile;
     [SerializeField] private GameObject key;
     [SerializeField] private GameObject lockTile;
+    [SerializeField] private GameObject redWarp;
+    [SerializeField] private GameObject blueWarp;
     [SerializeField] private Tilemap tm;
     [SerializeField] private Transform tileGroup;
     [SerializeField] private Transform itemGroup;
@@ -90,11 +92,35 @@ public class SpawnItems : MonoBehaviour
                             Instantiate(lockTile, SpawnPos, Quaternion.identity, itemGroup);
                             tm.SetTile(new Vector3Int(x, y, 0), null);
                             break;
+                        case "warpred":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(redWarp, SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "warpblue":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(blueWarp, SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
                         default:
                             break;
                     }
                 }
             }
+        }
+    }
+
+    public void SetWarps()
+    {
+        foreach (GameObject warps in GameObject.FindGameObjectsWithTag("RedWarp"))
+        {
+            WarpBehavior wp = warps.GetComponent<WarpBehavior>();
+            wp.findOtherWarp();
+        }
+        foreach (GameObject warps in GameObject.FindGameObjectsWithTag("BlueWarp"))
+        {
+            WarpBehavior wp = warps.GetComponent<WarpBehavior>();
+            wp.findOtherWarp();
         }
     }
 }
