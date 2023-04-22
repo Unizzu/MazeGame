@@ -67,11 +67,17 @@ public class PlayerBehavior : MonoBehaviour
         if(col.gameObject.tag == "Goal")
         {
             goalReached = true;
+            displayText.text = " ";
             uibehavior.activateGoalUI();
         }
         if (col.gameObject.tag == "RedWarp" || col.gameObject.tag == "BlueWarp")
         {
             displayText.text = "Press Space to Warp.";
+        }
+        if(col.gameObject.tag == "Button")
+        {
+            ButtonBehavior button = col.GetComponent<ButtonBehavior>();
+            button.Pressed();
         }
 
     }
@@ -98,6 +104,11 @@ public class PlayerBehavior : MonoBehaviour
         {
             displayText.text = "Press 'R' to retry.";
         }
+        if (col.gameObject.tag == "Button")
+        {
+            ButtonBehavior button = col.GetComponent<ButtonBehavior>();
+            button.Released();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -105,6 +116,13 @@ public class PlayerBehavior : MonoBehaviour
         if (col.gameObject.tag == "Lock" && keynum >= 1)
         {
             displayText.text = "Press Space to Unlock.";
+        }
+        if (col.gameObject.tag == "BulkLock")
+        {
+            if(keynum >= 3)
+                displayText.text = "Press Space to Unlock.";
+            else
+                displayText.text = "Not Enough Keys.";
         }
     }
 
@@ -119,11 +137,20 @@ public class PlayerBehavior : MonoBehaviour
                 Destroy(col.gameObject);
             }
         }
+        if (col.gameObject.tag == "BulkLock" && keynum >= 3)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                keynum -= 3;
+                displayText.text = "Press 'R' to retry.";
+                Destroy(col.gameObject);
+            }
+        }
     }
 
     private void OnCollisionExit2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Lock")
+        if (col.gameObject.tag == "Lock" || col.gameObject.tag == "BulkLock")
         {
             displayText.text = "Press 'R' to retry.";
         }

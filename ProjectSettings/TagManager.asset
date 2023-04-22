@@ -10,6 +10,10 @@ TagManager:
   - Lock
   - RedWarp
   - BlueWarp
+  - BulkLock
+  - Red
+  - Blue
+  - Button
   layers:
   - Default
   - TransparentFX

@@ -159,7 +159,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -975,8 +975,13 @@ MonoBehaviour:
   blockTile: {fileID: 7938311554274107392, guid: b2237d0de78903b4c8df11d6771d23bd, type: 3}
   key: {fileID: 8099476538056590969, guid: 33c11ca0ec13fdd4cb83fa51d2ea986d, type: 3}
   lockTile: {fileID: 1321321556110417585, guid: 0547a6b3a00045d4f9929e2dfd4cf77a, type: 3}
+  bulkLockTile: {fileID: 5828486330005597216, guid: ec0f01914e07009488545daf2cd41510, type: 3}
   redWarp: {fileID: 6412394998331666390, guid: e070c45eb86e5ae478a8787fdb99e36d, type: 3}
   blueWarp: {fileID: 8038598508694216324, guid: d280e74b6a1875241a19cd8283f172fd, type: 3}
+  redButton: {fileID: 6899832872991969946, guid: beea9b626bfa9304ab5c6724795fb96f, type: 3}
+  blueButton: {fileID: 7617767952384409423, guid: 66bd27a9d2d521745a154027a604034b, type: 3}
+  redBlock: {fileID: 5541120090075454168, guid: 4505829128c096f49901c2e8e864703e, type: 3}
+  blueBlock: {fileID: 2726294501583545061, guid: d2068df00c1208a42ae990d8ef914be7, type: 3}
   tm: {fileID: 1691112322}
   tileGroup: {fileID: 637348818}
   itemGroup: {fileID: 940421545}
@@ -1460,7 +1465,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cc4f58997fe3dce4eaff6f6b468386d7, type: 2}
+  - {fileID: 2100000, guid: cab51c6486e60784aac9359667b78a27, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
