@@ -25,6 +25,13 @@ public class UIManager : MonoBehaviour
 
     void ButtonClicked()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if(SceneManager.GetActiveScene().buildIndex + 1 == 3)
+        {
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }
