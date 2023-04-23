@@ -8,6 +8,12 @@ TagManager:
   - Light
   - Key
   - Lock
+  - RedWarp
+  - BlueWarp
+  - BulkLock
+  - Red
+  - Blue
+  - Button
   layers:
   - Default
   - TransparentFX
@@ -45,9 +51,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 976783287
-    locked: 0
   - name: Map
     uniqueID: 2081157407
     locked: 0
@@ -56,6 +59,12 @@ TagManager:
     locked: 0
   - name: Overlay
     uniqueID: 4022246479
+    locked: 0
+  - name: Warps
+    uniqueID: 3535537201
+    locked: 0
+  - name: Player
+    uniqueID: 976783287
     locked: 0
   - name: Items
     uniqueID: 3728573351
