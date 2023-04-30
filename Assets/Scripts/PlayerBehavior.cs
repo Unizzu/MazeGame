@@ -21,6 +21,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private Collider2D collid;
     private Collider2D lightcol;
+    private Rigidbody2D rb;
     //private Collider2D lightcol;
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,7 @@ public class PlayerBehavior : MonoBehaviour
         collid.enabled = false;
         lightcol = lighter.GetComponentInChildren<Collider2D>();
         lightcol.enabled = false;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -54,8 +56,9 @@ public class PlayerBehavior : MonoBehaviour
     {
         XTrans = Input.GetAxis("Horizontal") * speed;
         YTrans = Input.GetAxis("Vertical") * speed;
-        //transform.position = new Vector2(XTrans, YTrans);
-        transform.Translate(new Vector2(XTrans, YTrans) * Time.deltaTime);
+        //transform.position += new Vector3(XTrans, YTrans, 0);
+        //transform.Translate(new Vector2(XTrans, YTrans) * Time.deltaTime);
+        rb.velocity += new Vector2(XTrans, YTrans);
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
