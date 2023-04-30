@@ -18,6 +18,7 @@ public class PlayerBehavior : MonoBehaviour
     private bool goalReached = false;
     private bool isStarted = false;
     private bool warpCooldown = false;
+    private bool isLoading = true;
 
     private Collider2D collid;
     private Collider2D lightcol;
@@ -26,19 +27,20 @@ public class PlayerBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        displayText.text = "Press Space to Start.";
+        displayText.text = "Loading...";
         collid = GetComponent<Collider2D>();
         collid.enabled = false;
         lightcol = lighter.GetComponentInChildren<Collider2D>();
         lightcol.enabled = false;
         rb = GetComponent<Rigidbody2D>();
+        StartCoroutine(LoadWait());
     }
 
     // Update is called once per frame
     void Update()
     {
         keyNumText.text = keynum.ToString();
-        if(!isStarted && Input.GetKeyDown(KeyCode.Space))
+        if(!isStarted && Input.GetKeyDown(KeyCode.Space) && !isLoading)
         {
             displayText.text = "Press 'R' to retry.";
             spawnitems.SetWarps();
@@ -161,7 +163,14 @@ public class PlayerBehavior : MonoBehaviour
 
     IEnumerator WarpingCooldown()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.5f);
         warpCooldown = false;
+    }
+
+    IEnumerator LoadWait()
+    {
+        yield return new WaitForSeconds(3.0f);
+        isLoading = false;
+        displayText.text = "Press Space to Start.";
     }
 }

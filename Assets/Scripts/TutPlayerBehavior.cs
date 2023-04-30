@@ -25,6 +25,7 @@ public class TutPlayerBehavior : MonoBehaviour
     private bool interactedBulkLock = false;
     private bool interactedButton = false;
     private bool interactedWarp = false;
+    private bool isLoading = true;
 
     private Collider2D collid;
     private Collider2D lightcol;
@@ -34,19 +35,20 @@ public class TutPlayerBehavior : MonoBehaviour
     void Start()
     {
         topDisplayText.text = "Welcome to the Tutorial Level!";
-        bottomDisplayText.text = "Press Space to Start.";
+        bottomDisplayText.text = "Loading...";
         collid = GetComponent<Collider2D>();
         collid.enabled = false;
         lightcol = lighter.GetComponentInChildren<Collider2D>();
         lightcol.enabled = false;
         rb = GetComponent<Rigidbody2D>();
+        StartCoroutine(LoadWait());
     }
 
     // Update is called once per frame
     void Update()
     {
         keyNumText.text = keynum.ToString();
-        if (!isStarted && Input.GetKeyDown(KeyCode.Space))
+        if (!isStarted && Input.GetKeyDown(KeyCode.Space) && !isLoading)
         {
             topDisplayText.text = "Use 'WASD' or the arrow keys to move.";
             bottomDisplayText.text = "Press 'R' to retry.";
@@ -230,6 +232,13 @@ public class TutPlayerBehavior : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         topDisplayText.text = "";
         topDisplayText.fontSize = 30;
+    }
+
+    IEnumerator LoadWait()
+    {
+        yield return new WaitForSeconds(3.0f);
+        bottomDisplayText.text = "Press Space to Start.";
+        isLoading = false;
     }
 
 }
