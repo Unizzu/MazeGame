@@ -1296,6 +1296,7 @@ MonoBehaviour:
   displayText: {fileID: 504204134}
   keyNumText: {fileID: 719423634}
   lighter: {fileID: 666459608}
+  blinder: {fileID: 375756233}
   speed: 1
   keynum: 0
 --- !u!212 &1682253891

@@ -24,6 +24,7 @@ public class PlayerBehavior : MonoBehaviour
     private Collider2D collid;
     private Collider2D lightcol;
     private Rigidbody2D rb;
+    private Transform blindTransform;
     //private Collider2D lightcol;
     // Start is called before the first frame update
     void Start()
@@ -31,9 +32,10 @@ public class PlayerBehavior : MonoBehaviour
         displayText.text = "Loading...";
         collid = GetComponent<Collider2D>();
         collid.enabled = false;
-        lightcol = lighter.GetComponentInChildren<Collider2D>();
+        lightcol = lighter.GetComponentInChildren<CircleCollider2D>();
         lightcol.enabled = false;
         rb = GetComponent<Rigidbody2D>();
+        blindTransform = blinder.GetComponent<Transform>();
         StartCoroutine(LoadWait());
     }
 
@@ -62,6 +64,10 @@ public class PlayerBehavior : MonoBehaviour
         //transform.position += new Vector3(XTrans, YTrans, 0);
         //transform.Translate(new Vector2(XTrans, YTrans) * Time.deltaTime);
         rb.velocity += new Vector2(XTrans, YTrans);
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            blindTransform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        }
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
