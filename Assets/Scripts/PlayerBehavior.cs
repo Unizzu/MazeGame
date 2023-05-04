@@ -11,6 +11,7 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private TMP_Text displayText;
     [SerializeField] private TMP_Text keyNumText;
     [SerializeField] private GameObject lighter;
+    [SerializeField] private GameObject blinder;
     public float speed = 2.5f;
     public int keynum = 0;
     private float XTrans;
