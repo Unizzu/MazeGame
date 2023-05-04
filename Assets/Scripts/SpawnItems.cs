@@ -20,6 +20,8 @@ public class SpawnItems : MonoBehaviour
     [SerializeField] private GameObject blueButton;
     [SerializeField] private GameObject redBlock;
     [SerializeField] private GameObject blueBlock;
+    [SerializeField] private GameObject[] coloredKeys;
+    [SerializeField] private GameObject[] coloredLocks;
     [SerializeField] private Tilemap tm;
     [SerializeField] private Transform tileGroup;
     [SerializeField] private Transform itemGroup;
@@ -93,6 +95,30 @@ public class SpawnItems : MonoBehaviour
                             Instantiate(key, SpawnPos, Quaternion.identity, itemGroup);
                             tm.SetTile(new Vector3Int(x, y, 0), null);
                             break;
+                        case "keyblue":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
+                            Instantiate(coloredKeys[0], SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "keygreen":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
+                            Instantiate(coloredKeys[1], SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "keyyellow":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
+                            Instantiate(coloredKeys[2], SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "keyred":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
+                            Instantiate(coloredKeys[3], SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
                         case "locktile":
                             SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
                             Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
@@ -103,6 +129,30 @@ public class SpawnItems : MonoBehaviour
                             SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
                             Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
                             Instantiate(bulkLockTile, SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "bluelock":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
+                            Instantiate(coloredLocks[0], SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "greenlock":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
+                            Instantiate(coloredLocks[1], SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "yellowlock":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
+                            Instantiate(coloredLocks[2], SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "redlock":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
+                            Instantiate(coloredLocks[3], SpawnPos, Quaternion.identity, itemGroup);
                             tm.SetTile(new Vector3Int(x, y, 0), null);
                             break;
                         case "warpred":

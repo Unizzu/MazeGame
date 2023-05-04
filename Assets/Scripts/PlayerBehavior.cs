@@ -20,9 +20,11 @@ public class PlayerBehavior : MonoBehaviour
     private bool isStarted = false;
     private bool warpCooldown = false;
     private bool isLoading = true;
+    private bool cursed = false;
+    private bool[] keyInventory = new bool[4];
 
     private Collider2D collid;
-    private Collider2D lightcol;
+    private CircleCollider2D lightcol;
     private Rigidbody2D rb;
     private Transform blindTransform;
     //private Collider2D lightcol;
@@ -55,6 +57,18 @@ public class PlayerBehavior : MonoBehaviour
         {
             Move();
         }
+        if(cursed)
+        {
+            blindTransform.localScale = new Vector3(1f, 1f, 1f);
+            lightcol.radius = 1.3f;
+            speed = 1f;
+        }
+        else
+        {
+            blindTransform.localScale = new Vector3(1.4f, 1.4f, 1f);
+            lightcol.radius = 1.75f;
+            speed = 2.5f;
+        }
     }
 
     private void Move()
@@ -64,16 +78,36 @@ public class PlayerBehavior : MonoBehaviour
         //transform.position += new Vector3(XTrans, YTrans, 0);
         //transform.Translate(new Vector2(XTrans, YTrans) * Time.deltaTime);
         rb.velocity += new Vector2(XTrans, YTrans);
-        if(Input.GetKeyDown(KeyCode.N))
+        
+        /*if(Input.GetKeyDown(KeyCode.N))
         {
-            blindTransform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            blindTransform.localScale = new Vector3(2f, 2f, 2f);
+            lightcol.radius = 2.6f;
         }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            blindTransform.localScale = new Vector3(1f, 1f, 1f);
+            lightcol.radius = 1.3f;
+        }*/
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag == "Key")
         {
             keynum++;
+            Destroy(col.gameObject);
+        }
+        if(col.gameObject.tag == "RedKey")
+        {
+            keyInventory[3] = true;
+            cursed = true;
+            Destroy(col.gameObject);
+        }
+        if(col.gameObject.tag == "GreenKey")
+        {
+            keyInventory[1] = true;
+            if (cursed)
+                cursed = false;
             Destroy(col.gameObject);
         }
         if(col.gameObject.tag == "Goal")
@@ -136,6 +170,20 @@ public class PlayerBehavior : MonoBehaviour
             else
                 displayText.text = "Not Enough Keys.";
         }
+        if (col.gameObject.tag == "RedLock")
+        {
+            if(keyInventory[3])
+            {
+                displayText.text = "Press Space to Unlock.";
+            }
+        }
+        if (col.gameObject.tag == "GreenLock")
+        {
+            if (keyInventory[1])
+            {
+                displayText.text = "Press Space to Unlock.";
+            }
+        }
     }
 
     private void OnCollisionStay2D(Collision2D col)
@@ -158,13 +206,39 @@ public class PlayerBehavior : MonoBehaviour
                 Destroy(col.gameObject);
             }
         }
+        if (col.gameObject.tag == "RedLock" && keyInventory[3])
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                keyInventory[3] = false;
+                displayText.text = "Press 'R' to retry.";
+                RemoveColoredLocks(col.gameObject.tag);
+            }
+        }
+        if (col.gameObject.tag == "GreenLock" && keyInventory[1])
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                keyInventory[1] = false;
+                displayText.text = "Press 'R' to retry.";
+                RemoveColoredLocks(col.gameObject.tag);
+            }
+        }
     }
 
     private void OnCollisionExit2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Lock" || col.gameObject.tag == "BulkLock")
+        if (col.gameObject.tag == "Lock" || col.gameObject.tag == "BulkLock" || col.gameObject.tag == "RedLock" || col.gameObject.tag == "GreenLock")
         {
             displayText.text = "Press 'R' to retry.";
+        }
+    }
+
+    private void RemoveColoredLocks(string tag)
+    {
+        foreach (GameObject locks in GameObject.FindGameObjectsWithTag(tag))
+        {
+            Destroy(locks);
         }
     }
 
