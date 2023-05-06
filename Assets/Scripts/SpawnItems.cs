@@ -22,6 +22,7 @@ public class SpawnItems : MonoBehaviour
     [SerializeField] private GameObject blueBlock;
     [SerializeField] private GameObject[] coloredKeys = new GameObject[4];
     [SerializeField] private GameObject[] coloredLocks = new GameObject[4];
+    [SerializeField] private GameObject[] effectTiles = new GameObject[4];
     [SerializeField] private Tilemap tm;
     [SerializeField] private Transform tileGroup;
     [SerializeField] private Transform itemGroup;
@@ -187,6 +188,26 @@ public class SpawnItems : MonoBehaviour
                             SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
                             Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
                             Instantiate(blueBlock, SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "speeduptile":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(effectTiles[0], SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "speeddowntile":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(effectTiles[1], SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "lightuptile":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(effectTiles[2], SpawnPos, Quaternion.identity, itemGroup);
+                            tm.SetTile(new Vector3Int(x, y, 0), null);
+                            break;
+                        case "lightdowntile":
+                            SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
+                            Instantiate(effectTiles[3], SpawnPos, Quaternion.identity, itemGroup);
                             tm.SetTile(new Vector3Int(x, y, 0), null);
                             break;
                         default:
