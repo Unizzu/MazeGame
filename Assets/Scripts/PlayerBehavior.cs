@@ -229,7 +229,7 @@ public class PlayerBehavior : MonoBehaviour
             SpeedTileBehavior stb = col.GetComponent<SpeedTileBehavior>();
             if(stb.checkActivation())
             {
-                if(stb.giveEffect() || !blueKeyBuff)
+                if(stb.giveEffect() && !blueKeyBuff)
                 {
                     speed += 0.5f;
                     StartCoroutine(tileSpeedUp());
