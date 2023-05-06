@@ -12,7 +12,7 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private TMP_Text keyNumText;
     [SerializeField] private GameObject lighter;
     [SerializeField] private GameObject blinder;
-    public float speed = 2.5f;
+    private float speed = 2f;
     public int keynum = 0;
     private float XTrans;
     private float YTrans;
@@ -67,7 +67,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             blindTransform.localScale = new Vector3(1.4f, 1.4f, 1f);
             lightcol.radius = 1.75f;
-            speed = 2.5f;
+            speed = 2f;
         }
     }
 

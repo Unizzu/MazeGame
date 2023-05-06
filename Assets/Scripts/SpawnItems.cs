@@ -20,8 +20,8 @@ public class SpawnItems : MonoBehaviour
     [SerializeField] private GameObject blueButton;
     [SerializeField] private GameObject redBlock;
     [SerializeField] private GameObject blueBlock;
-    [SerializeField] private GameObject[] coloredKeys;
-    [SerializeField] private GameObject[] coloredLocks;
+    [SerializeField] private GameObject[] coloredKeys = new GameObject[4];
+    [SerializeField] private GameObject[] coloredLocks = new GameObject[4];
     [SerializeField] private Tilemap tm;
     [SerializeField] private Transform tileGroup;
     [SerializeField] private Transform itemGroup;

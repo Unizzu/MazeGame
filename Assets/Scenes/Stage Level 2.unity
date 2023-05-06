@@ -982,8 +982,16 @@ MonoBehaviour:
   blueButton: {fileID: 7617767952384409423, guid: 66bd27a9d2d521745a154027a604034b, type: 3}
   redBlock: {fileID: 5541120090075454168, guid: 4505829128c096f49901c2e8e864703e, type: 3}
   blueBlock: {fileID: 2726294501583545061, guid: d2068df00c1208a42ae990d8ef914be7, type: 3}
-  coloredKeys: []
-  coloredLocks: []
+  coloredKeys:
+  - {fileID: 1660729425827055022, guid: d3b34faa146aa3e4a9f353f3ffea8693, type: 3}
+  - {fileID: 1894583905486976254, guid: d4829c18d9f76714294ada5d56ce9ebf, type: 3}
+  - {fileID: 1099335085563842211, guid: 90b60524cb911e84096b081a9be77bb5, type: 3}
+  - {fileID: 1709578861186789779, guid: a487d35b00ae6a549a31e5d906b3f6de, type: 3}
+  coloredLocks:
+  - {fileID: 9164109266396436423, guid: d1721b0fa597d3b4983d02e2a0e52484, type: 3}
+  - {fileID: 1614279384771072638, guid: 913ffdf454f549c48a0b698ea318f10e, type: 3}
+  - {fileID: 5584320369417893513, guid: 76931e98ae44f9a41add2d2371b40d27, type: 3}
+  - {fileID: 1393508380486535416, guid: f1952eb1358e39a4ba728cedd5903ee2, type: 3}
   tm: {fileID: 1691112322}
   tileGroup: {fileID: 637348818}
   itemGroup: {fileID: 940421545}
