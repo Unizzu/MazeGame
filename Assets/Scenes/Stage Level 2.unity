@@ -982,6 +982,8 @@ MonoBehaviour:
   blueButton: {fileID: 7617767952384409423, guid: 66bd27a9d2d521745a154027a604034b, type: 3}
   redBlock: {fileID: 5541120090075454168, guid: 4505829128c096f49901c2e8e864703e, type: 3}
   blueBlock: {fileID: 2726294501583545061, guid: d2068df00c1208a42ae990d8ef914be7, type: 3}
+  coloredKeys: []
+  coloredLocks: []
   tm: {fileID: 1691112322}
   tileGroup: {fileID: 637348818}
   itemGroup: {fileID: 940421545}
