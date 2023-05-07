@@ -16,10 +16,9 @@ public class SpawnItems : MonoBehaviour
     [SerializeField] private GameObject bulkLockTile;
     [SerializeField] private GameObject redWarp;
     [SerializeField] private GameObject blueWarp;
-    [SerializeField] private GameObject redButton;
-    [SerializeField] private GameObject blueButton;
-    [SerializeField] private GameObject redBlock;
-    [SerializeField] private GameObject blueBlock;
+    [SerializeField] private GameObject[] warps = new GameObject[4];
+    [SerializeField] private GameObject[] buttons = new GameObject[4];
+    [SerializeField] private GameObject[] coloredBlocks = new GameObject[4];
     [SerializeField] private GameObject[] coloredKeys = new GameObject[4];
     [SerializeField] private GameObject[] coloredLocks = new GameObject[4];
     [SerializeField] private GameObject[] effectTiles = new GameObject[4];
@@ -158,36 +157,36 @@ public class SpawnItems : MonoBehaviour
                             break;
                         case "warpred":
                             SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
-                            Instantiate(redWarp, SpawnPos, Quaternion.identity, itemGroup);
+                            Instantiate(warps[0], SpawnPos, Quaternion.identity, itemGroup);
                             tm.SetTile(new Vector3Int(x, y, 0), null);
                             break;
                         case "warpblue":
                             SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
-                            Instantiate(blueWarp, SpawnPos, Quaternion.identity, itemGroup);
+                            Instantiate(warps[1], SpawnPos, Quaternion.identity, itemGroup);
                             tm.SetTile(new Vector3Int(x, y, 0), null);
                             break;
                         case "buttonred":
                             SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
                             Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
-                            Instantiate(redButton, SpawnPos, Quaternion.identity, itemGroup);
+                            Instantiate(buttons[0], SpawnPos, Quaternion.identity, itemGroup);
                             tm.SetTile(new Vector3Int(x, y, 0), null);
                             break;
                         case "buttonblue":
                             SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
                             Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
-                            Instantiate(blueButton, SpawnPos, Quaternion.identity, itemGroup);
+                            Instantiate(buttons[1], SpawnPos, Quaternion.identity, itemGroup);
                             tm.SetTile(new Vector3Int(x, y, 0), null);
                             break;
                         case "buttonblockred":
                             SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
                             Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
-                            Instantiate(redBlock, SpawnPos, Quaternion.identity, itemGroup);
+                            Instantiate(coloredBlocks[0], SpawnPos, Quaternion.identity, itemGroup);
                             tm.SetTile(new Vector3Int(x, y, 0), null);
                             break;
                         case "buttonblockblue":
                             SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
                             Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
-                            Instantiate(blueBlock, SpawnPos, Quaternion.identity, itemGroup);
+                            Instantiate(coloredBlocks[1], SpawnPos, Quaternion.identity, itemGroup);
                             tm.SetTile(new Vector3Int(x, y, 0), null);
                             break;
                         case "speeduptile":

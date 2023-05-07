@@ -15,7 +15,8 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private GameObject effectDisplay1;
     [SerializeField] private GameObject effectDisplay2;
     [SerializeField] private Sprite[] effectSprites = new Sprite[4];
-    [SerializeField] private float speed = 2f;
+    [SerializeField] private AudioClip[] sounds = new AudioClip[8];
+    [SerializeField] private float speed = 1.5f;
     public int keynum = 0;
     private float XTrans;
     private float YTrans;
@@ -36,6 +37,7 @@ public class PlayerBehavior : MonoBehaviour
     private Transform blindTransform;
     private Image effectIcon1;
     private Image effectIcon2;
+    private AudioSource playerAudio;
     //private Collider2D lightcol;
     // Start is called before the first frame update
     void Start()
@@ -51,6 +53,7 @@ public class PlayerBehavior : MonoBehaviour
         effectIcon2 = effectDisplay2.GetComponent<Image>();
         effectDisplay1.SetActive(false);
         effectDisplay2.SetActive(false);
+        playerAudio = GetComponent<AudioSource>();
         StartCoroutine(LoadWait());
     }
 
@@ -106,16 +109,16 @@ public class PlayerBehavior : MonoBehaviour
     }
     private void DisplayEffectIcon()
     {
-        if (speed != 2.0f || lightcol.radius != 1.75f)
+        if (speed != 1.5f || lightcol.radius != 1.75f)
         {
             if (!speedDisplayed)
             {
-                if(speed != 2.0f)
+                if(speed != 1.5f)
                 {
                     if (!effectDisplay1.activeSelf)
                     {
                         effectDisplay1.SetActive(true);
-                        if (speed > 2.0f)
+                        if (speed > 1.5f)
                             effectIcon1.sprite = effectSprites[0];
                         else
                             effectIcon1.sprite = effectSprites[1];
@@ -123,7 +126,7 @@ public class PlayerBehavior : MonoBehaviour
                     else
                     {
                         effectDisplay2.SetActive(true);
-                        if (speed > 2.0f)
+                        if (speed > 1.5f)
                             effectIcon2.sprite = effectSprites[0];
                         else
                             effectIcon2.sprite = effectSprites[1];
@@ -178,6 +181,8 @@ public class PlayerBehavior : MonoBehaviour
             keyInventory[0] = true;
             speed = 3f;
             blueKeyBuff = true;
+            playerAudio.clip = sounds[1];
+            playerAudio.Play();
             Destroy(col.gameObject);
         }
         if (col.gameObject.tag == "GreenKey")
@@ -186,10 +191,12 @@ public class PlayerBehavior : MonoBehaviour
             if (cursed)
             {
                 cursed = false;
-                speed = 2f;
+                speed = 1.5f;
                 blindTransform.localScale = new Vector3(1.4f, 1.4f, 1f);
                 lightcol.radius = 1.75f;
             }
+            playerAudio.clip = sounds[2];
+            playerAudio.Play();
             Destroy(col.gameObject);
         }
         if (col.gameObject.tag == "YellowKey")
@@ -198,6 +205,8 @@ public class PlayerBehavior : MonoBehaviour
             blindTransform.localScale = new Vector3(1.8f, 1.8f, 1f);
             lightcol.radius = 2.2f;
             yellowKeyBuff = true;
+            playerAudio.clip = sounds[4];
+            playerAudio.Play();
             Destroy(col.gameObject);
         }
         if (col.gameObject.tag == "RedKey")
@@ -206,13 +215,17 @@ public class PlayerBehavior : MonoBehaviour
             cursed = true;
             blindTransform.localScale = new Vector3(1f, 1f, 1f);
             lightcol.radius = 1.3f;
-            speed = 1f;
+            speed = 0.75f;
+            playerAudio.clip = sounds[3];
+            playerAudio.Play();
             Destroy(col.gameObject);
         }
         if(col.gameObject.tag == "Goal")
         {
             goalReached = true;
             displayText.text = " ";
+            playerAudio.clip = sounds[7];
+            playerAudio.Play();
             uibehavior.activateGoalUI();
         }
         if (col.gameObject.tag == "RedWarp" || col.gameObject.tag == "BlueWarp")
@@ -222,6 +235,8 @@ public class PlayerBehavior : MonoBehaviour
         if(col.gameObject.tag == "Button")
         {
             ButtonBehavior button = col.GetComponent<ButtonBehavior>();
+            playerAudio.clip = sounds[0];
+            playerAudio.Play();
             button.Pressed();
         }
         if (col.gameObject.tag == "SpeedEffect")
@@ -249,13 +264,13 @@ public class PlayerBehavior : MonoBehaviour
             {
                 if(ltb.giveEffect() && !yellowKeyBuff)
                 {
-                    blindTransform.localScale = new Vector3(1.6f, 1.6f, 1f);
+                    blindTransform.localScale += new Vector3(0.2f, 0.2f, 1f);
                     lightcol.radius += 0.225f;
                     StartCoroutine(tileLightUp());
                 }
                 else
                 {
-                    blindTransform.localScale = new Vector3(1.2f, 1.2f, 1f);
+                    blindTransform.localScale -= new Vector3(0.2f, 0.2f, 1f);
                     lightcol.radius -= 0.225f;
                     StartCoroutine(tileLightDown());
                 }
@@ -276,6 +291,8 @@ public class PlayerBehavior : MonoBehaviour
                 wp.Teleport(gameObject.transform);
                 collid.enabled = true;
                 warpCooldown = true;
+                playerAudio.clip = sounds[6];
+                playerAudio.Play();
                 StartCoroutine(WarpingCooldown());
             }
         }
@@ -345,6 +362,8 @@ public class PlayerBehavior : MonoBehaviour
             {
                 keynum--;
                 displayText.text = "Press 'R' to retry.";
+                playerAudio.clip = sounds[5];
+                playerAudio.Play();
                 Destroy(col.gameObject);
             }
         }
@@ -354,6 +373,8 @@ public class PlayerBehavior : MonoBehaviour
             {
                 keynum -= 3;
                 displayText.text = "Press 'R' to retry.";
+                playerAudio.clip = sounds[5];
+                playerAudio.Play();
                 Destroy(col.gameObject);
             }
         }
@@ -366,6 +387,8 @@ public class PlayerBehavior : MonoBehaviour
                 RemoveColoredLocks(col.gameObject.tag);
                 speed = 2f;
                 blueKeyBuff = false;
+                playerAudio.clip = sounds[5];
+                playerAudio.Play();
             }
         }
         if (col.gameObject.tag == "GreenLock" && keyInventory[1])
@@ -374,6 +397,8 @@ public class PlayerBehavior : MonoBehaviour
             {
                 keyInventory[1] = false;
                 displayText.text = "Press 'R' to retry.";
+                playerAudio.clip = sounds[5];
+                playerAudio.Play();
                 RemoveColoredLocks(col.gameObject.tag);
             }
         }
@@ -387,6 +412,8 @@ public class PlayerBehavior : MonoBehaviour
                 blindTransform.localScale = new Vector3(1.4f, 1.4f, 1f);
                 lightcol.radius = 1.75f;
                 yellowKeyBuff = false;
+                playerAudio.clip = sounds[5];
+                playerAudio.Play();
             }
         }
         if (col.gameObject.tag == "RedLock" && keyInventory[3])
@@ -395,6 +422,8 @@ public class PlayerBehavior : MonoBehaviour
             {
                 keyInventory[3] = false;
                 displayText.text = "Press 'R' to retry.";
+                playerAudio.clip = sounds[5];
+                playerAudio.Play();
                 RemoveColoredLocks(col.gameObject.tag);
             }
         }
@@ -444,14 +473,14 @@ public class PlayerBehavior : MonoBehaviour
     IEnumerator tileLightUp()
     {
         yield return new WaitForSeconds(5.0f);
-        blindTransform.localScale = new Vector3(1.4f, 1.4f, 1f);
+        blindTransform.localScale -= new Vector3(0.2f, 0.2f, 1f);
         lightcol.radius -= 0.225f;
     }
 
     IEnumerator tileLightDown()
     {
         yield return new WaitForSeconds(5.0f);
-        blindTransform.localScale = new Vector3(1.4f, 1.4f, 1f);
+        blindTransform.localScale += new Vector3(0.2f, 0.2f, 1f);
         lightcol.radius += 0.225f;
     }
 }
