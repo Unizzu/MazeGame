@@ -8,6 +8,12 @@ public class TitleUIBehavior : MonoBehaviour
 {
     [SerializeField] private Button playButton;
     [SerializeField] private Button tutButton;
+    [SerializeField] private GameObject MusicPlayer;
+    void Awake()
+    {
+        DontDestroyOnLoad(MusicPlayer);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +29,7 @@ public class TitleUIBehavior : MonoBehaviour
 
     void PlayButtonClicked()
     {
-        SceneManager.LoadScene("Stage Level 2");
+        SceneManager.LoadScene("Stage Level 1");
     }
     void TutButtonClicked()
     {

@@ -13,7 +13,6 @@ public class LightTileBehavior : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         anim.SetBool("buff", isBuff);
-
     }
 
     // Update is called once per frame
@@ -26,6 +25,8 @@ public class LightTileBehavior : MonoBehaviour
     public bool giveEffect()
     {
         StartCoroutine(Deactivate());
+        if (!anim.GetBool("isRevealed"))
+            anim.SetBool("isRevealed", true);
         return isBuff;
     }
 
