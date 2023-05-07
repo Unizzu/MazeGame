@@ -12,7 +12,8 @@ public class TutPlayerBehavior : MonoBehaviour
     [SerializeField] private TMP_Text bottomDisplayText;
     [SerializeField] private TMP_Text keyNumText;
     [SerializeField] private GameObject lighter;
-    public float speed = 2.5f;
+    [SerializeField] private AudioClip[] sounds = new AudioClip[4];
+    public float speed = 1.5f;
     public int keynum = 0;
     private float XTrans;
     private float YTrans;
@@ -30,6 +31,7 @@ public class TutPlayerBehavior : MonoBehaviour
     private Collider2D collid;
     private Collider2D lightcol;
     private Rigidbody2D rb;
+    private AudioSource playeraudio;
     //private Collider2D lightcol;
     // Start is called before the first frame update
     void Start()
@@ -56,6 +58,7 @@ public class TutPlayerBehavior : MonoBehaviour
             collid.enabled = true;
             lightcol.enabled = true;
             isStarted = true;
+            playeraudio = GetComponent<AudioSource>();
             StartCoroutine(TextCoolDown());
         }
         if (!goalReached && isStarted)
@@ -76,6 +79,8 @@ public class TutPlayerBehavior : MonoBehaviour
         if (col.gameObject.tag == "Key")
         {
             keynum++;
+            playeraudio.clip = sounds[0];
+            playeraudio.Play();
             Destroy(col.gameObject);
             if(!interactedKey)
             {
@@ -88,6 +93,8 @@ public class TutPlayerBehavior : MonoBehaviour
         if (col.gameObject.tag == "Goal")
         {
             goalReached = true;
+            playeraudio.clip = sounds[3];
+            playeraudio.Play();
             bottomDisplayText.text = " ";
             uibehavior.activateGoalUI();
         }
@@ -106,6 +113,8 @@ public class TutPlayerBehavior : MonoBehaviour
         {
             ButtonBehavior button = col.GetComponent<ButtonBehavior>();
             button.Pressed();
+            playeraudio.clip = sounds[1];
+            playeraudio.Play();
             if (!interactedButton)
             {
                 topDisplayText.fontSize = 25;
@@ -198,6 +207,8 @@ public class TutPlayerBehavior : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 keynum--;
+                playeraudio.clip = sounds[2];
+                playeraudio.Play();
                 bottomDisplayText.text = "Press 'R' to retry.";
                 Destroy(col.gameObject);
             }
@@ -207,6 +218,8 @@ public class TutPlayerBehavior : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 keynum -= 3;
+                playeraudio.clip = sounds[2];
+                playeraudio.Play();
                 bottomDisplayText.text = "Press 'R' to retry.";
                 Destroy(col.gameObject);
             }
