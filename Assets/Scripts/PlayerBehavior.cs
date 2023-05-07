@@ -229,6 +229,7 @@ public class PlayerBehavior : MonoBehaviour
             playerAudio.clip = sounds[3];
             playerAudio.Play();
             Destroy(col.gameObject);
+            spawnitems.CurseCall();
         }
         if(col.gameObject.tag == "Goal")
         {
@@ -238,7 +239,7 @@ public class PlayerBehavior : MonoBehaviour
             playerAudio.Play();
             uibehavior.activateGoalUI();
         }
-        if (col.gameObject.tag == "RedWarp" || col.gameObject.tag == "BlueWarp")
+        if (col.gameObject.tag == "RedWarp" || col.gameObject.tag == "BlueWarp" || col.gameObject.tag == "YellowWarp" || col.gameObject.tag == "GreenWarp")
         {
             displayText.text = "Press Space to Warp.";
         }
@@ -292,7 +293,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        if(col.gameObject.tag == "RedWarp" || col.gameObject.tag == "BlueWarp")
+        if(col.gameObject.tag == "RedWarp" || col.gameObject.tag == "BlueWarp" || col.gameObject.tag == "YellowWarp" || col.gameObject.tag == "GreenWarp")
         {
             WarpBehavior wp = col.GetComponent<WarpBehavior>();
             if (Input.GetKeyDown(KeyCode.Space) && !warpCooldown)
@@ -310,7 +311,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.tag == "RedWarp" || col.gameObject.tag == "BlueWarp")
+        if (col.gameObject.tag == "RedWarp" || col.gameObject.tag == "BlueWarp" || col.gameObject.tag == "YellowWarp" || col.gameObject.tag == "GreenWarp")
         {
             displayText.text = "Press 'R' to retry.";
         }
@@ -424,6 +425,7 @@ public class PlayerBehavior : MonoBehaviour
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
                 DisableEffectIcon(2);
+                spawnitems.LightUpBlocks();
             }
         }
         if (col.gameObject.tag == "RedLock" && keyInventory[3])
@@ -434,6 +436,7 @@ public class PlayerBehavior : MonoBehaviour
                 displayText.text = "Press 'R' to retry.";
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
+                spawnitems.CurseCall();
                 RemoveColoredLocks(col.gameObject.tag);
             }
         }
