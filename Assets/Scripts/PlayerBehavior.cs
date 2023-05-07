@@ -24,8 +24,6 @@ public class PlayerBehavior : MonoBehaviour
     private bool isStarted = false;
     private bool warpCooldown = false;
     private bool isLoading = true;
-    private bool blueKeyBuff = false;
-    private bool yellowKeyBuff = false;
     private bool cursed = false;
     private bool speedDisplayed = false;
     private bool lightDisplayed = false;
@@ -194,7 +192,6 @@ public class PlayerBehavior : MonoBehaviour
         {
             keyInventory[0] = true;
             speed = 3f;
-            blueKeyBuff = true;
             playerAudio.clip = sounds[1];
             playerAudio.Play();
             Destroy(col.gameObject);
@@ -218,7 +215,6 @@ public class PlayerBehavior : MonoBehaviour
             keyInventory[2] = true;
             blindTransform.localScale = new Vector3(1.8f, 1.8f, 1f);
             lightcol.radius = 2.2f;
-            yellowKeyBuff = true;
             playerAudio.clip = sounds[4];
             playerAudio.Play();
             Destroy(col.gameObject);
@@ -258,7 +254,7 @@ public class PlayerBehavior : MonoBehaviour
             SpeedTileBehavior stb = col.GetComponent<SpeedTileBehavior>();
             if(stb.checkActivation())
             {
-                if(stb.giveEffect() && !blueKeyBuff)
+                if(stb.giveEffect())
                 {
                     speed += 0.5f;
                     StartCoroutine(tileSpeedUp());
@@ -276,7 +272,7 @@ public class PlayerBehavior : MonoBehaviour
             LightTileBehavior ltb = col.GetComponent<LightTileBehavior>();
             if(ltb.checkActivation())
             {
-                if(ltb.giveEffect() && !yellowKeyBuff)
+                if(ltb.giveEffect())
                 {
                     blindTransform.localScale += new Vector3(0.2f, 0.2f, 1f);
                     lightcol.radius += 0.225f;
@@ -400,7 +396,6 @@ public class PlayerBehavior : MonoBehaviour
                 displayText.text = "Press 'R' to retry.";
                 RemoveColoredLocks(col.gameObject.tag);
                 speed = 1.5f;
-                blueKeyBuff = false;
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
                 DisableEffectIcon(0);
@@ -426,7 +421,6 @@ public class PlayerBehavior : MonoBehaviour
                 RemoveColoredLocks(col.gameObject.tag);
                 blindTransform.localScale = new Vector3(1.4f, 1.4f, 1f);
                 lightcol.radius = 1.75f;
-                yellowKeyBuff = false;
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
                 DisableEffectIcon(2);
