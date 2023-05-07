@@ -1492,6 +1492,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 14e60e9a7e75cb9469e285719e0a4939, type: 3}
   - {fileID: 8300000, guid: 68425872dce32094d98d524f04721025, type: 3}
   - {fileID: 8300000, guid: 4b061c57414f2d84586a8321c238e056, type: 3}
+  - {fileID: 8300000, guid: 0813de856c9c3aa43a5d3f7715cf4e1e, type: 3}
   speed: 1.5
   keynum: 0
 --- !u!212 &1682253891

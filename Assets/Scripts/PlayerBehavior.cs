@@ -15,7 +15,7 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private GameObject effectDisplay1;
     [SerializeField] private GameObject effectDisplay2;
     [SerializeField] private Sprite[] effectSprites = new Sprite[4];
-    [SerializeField] private AudioClip[] sounds = new AudioClip[8];
+    [SerializeField] private AudioClip[] sounds = new AudioClip[9];
     [SerializeField] private float speed = 1.5f;
     public int keynum = 0;
     private float XTrans;
@@ -169,11 +169,25 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    private void DisableEffectIcon(int index)
+    {
+        if (effectDisplay1.activeSelf && effectIcon1.sprite == effectSprites[index])
+            effectDisplay1.SetActive(false);
+        if (effectDisplay2.activeSelf && effectIcon2.sprite == effectSprites[index])
+            effectDisplay2.SetActive(false);
+        if(index <= 1)
+            speedDisplayed = false;
+        else
+            lightDisplayed = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag == "Key")
         {
             keynum++;
+            playerAudio.clip = sounds[8];
+            playerAudio.Play();
             Destroy(col.gameObject);
         }
         if(col.gameObject.tag == "BlueKey")
@@ -385,10 +399,11 @@ public class PlayerBehavior : MonoBehaviour
                 keyInventory[0] = false;
                 displayText.text = "Press 'R' to retry.";
                 RemoveColoredLocks(col.gameObject.tag);
-                speed = 2f;
+                speed = 1.5f;
                 blueKeyBuff = false;
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
+                DisableEffectIcon(0);
             }
         }
         if (col.gameObject.tag == "GreenLock" && keyInventory[1])
@@ -414,6 +429,7 @@ public class PlayerBehavior : MonoBehaviour
                 yellowKeyBuff = false;
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
+                DisableEffectIcon(2);
             }
         }
         if (col.gameObject.tag == "RedLock" && keyInventory[3])
