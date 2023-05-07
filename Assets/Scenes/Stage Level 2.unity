@@ -976,23 +976,28 @@ MonoBehaviour:
   key: {fileID: 8099476538056590969, guid: 33c11ca0ec13fdd4cb83fa51d2ea986d, type: 3}
   lockTile: {fileID: 1321321556110417585, guid: 0547a6b3a00045d4f9929e2dfd4cf77a, type: 3}
   bulkLockTile: {fileID: 5828486330005597216, guid: ec0f01914e07009488545daf2cd41510, type: 3}
-  redWarp: {fileID: 6412394998331666390, guid: e070c45eb86e5ae478a8787fdb99e36d, type: 3}
-  blueWarp: {fileID: 8038598508694216324, guid: d280e74b6a1875241a19cd8283f172fd, type: 3}
+  lightBlock: {fileID: 879693662745690189, guid: 86c5b20acf6d4954eb7dccf4281b3e03, type: 3}
+  cursedBlockOn: {fileID: 1727342097521769751, guid: faa4d1269a9a7fe448282261df3cb488, type: 3}
+  cursedBlockOff: {fileID: 7739614676360902012, guid: 85cecae417b436d4c9f6dc3b3b916130, type: 3}
   warps:
   - {fileID: 6412394998331666390, guid: e070c45eb86e5ae478a8787fdb99e36d, type: 3}
   - {fileID: 8038598508694216324, guid: d280e74b6a1875241a19cd8283f172fd, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2121254182807889198, guid: 033ac77084a4d654cbfb6404e2e6863e, type: 3}
+  - {fileID: 1140008045191847582, guid: c9913e8bcaea56e4d8e34fcf0cfb5fac, type: 3}
   buttons:
   - {fileID: 6899832872991969946, guid: beea9b626bfa9304ab5c6724795fb96f, type: 3}
   - {fileID: 7617767952384409423, guid: 66bd27a9d2d521745a154027a604034b, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 7143306921678330617, guid: fadaf805b1e3b4e49b062359fb6bc7d3, type: 3}
+  - {fileID: 3877857089712139076, guid: f8e6267c05aa02e469660783b685142e, type: 3}
   coloredBlocks:
   - {fileID: 5541120090075454168, guid: 4505829128c096f49901c2e8e864703e, type: 3}
   - {fileID: 2726294501583545061, guid: d2068df00c1208a42ae990d8ef914be7, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 183129310105153164, guid: 270ded12dd8190c4884001a6c814a7fe, type: 3}
+  - {fileID: 8892689175739070596, guid: 47994b3ce31151045982170ffbfc8527, type: 3}
+  - {fileID: 3783111151334438471, guid: 8268dad7a4ad94141bd15398085c9f69, type: 3}
+  - {fileID: 1943064741692835610, guid: 435fa638f842993488a10b9f60e43f7b, type: 3}
+  - {fileID: 8493398570639315959, guid: 67136eb13bdd7884baaab1d3b3e27d56, type: 3}
+  - {fileID: 1846434752561132200, guid: 000cf25ff9d62c34c9764b784a161342, type: 3}
   coloredKeys:
   - {fileID: 1660729425827055022, guid: d3b34faa146aa3e4a9f353f3ffea8693, type: 3}
   - {fileID: 1894583905486976254, guid: d4829c18d9f76714294ada5d56ce9ebf, type: 3}
