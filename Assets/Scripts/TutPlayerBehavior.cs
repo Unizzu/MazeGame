@@ -61,6 +61,10 @@ public class TutPlayerBehavior : MonoBehaviour
             playeraudio = GetComponent<AudioSource>();
             StartCoroutine(TextCoolDown());
         }
+    }
+
+    void FixedUpdate()
+    {
         if (!goalReached && isStarted)
         {
             Move();

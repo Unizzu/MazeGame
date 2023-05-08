@@ -16,7 +16,7 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private GameObject effectDisplay2;
     [SerializeField] private Sprite[] effectSprites = new Sprite[4];
     [SerializeField] private AudioClip[] sounds = new AudioClip[9];
-    [SerializeField] private float speed = 1.5f;
+    private float speed = 1.25f;
     public int keynum = 0;
     private float XTrans;
     private float YTrans;
@@ -68,10 +68,6 @@ public class PlayerBehavior : MonoBehaviour
             lightcol.enabled = true;
             isStarted = true;
         }
-        if(!goalReached && isStarted)
-        {
-            Move();
-        }
         /*if(cursed)
         {
             blindTransform.localScale = new Vector3(1f, 1f, 1f);
@@ -86,13 +82,24 @@ public class PlayerBehavior : MonoBehaviour
         }*/
     }
 
+    void FixedUpdate()
+    {
+        if (!goalReached && isStarted)
+        {
+            Move();
+        }
+    }
+
     private void Move()
     {
         XTrans = Input.GetAxis("Horizontal") * speed;
         YTrans = Input.GetAxis("Vertical") * speed;
         //transform.position += new Vector3(XTrans, YTrans, 0);
         //transform.Translate(new Vector2(XTrans, YTrans) * Time.deltaTime);
-        rb.velocity += new Vector2(XTrans, YTrans);
+        if(cursed)
+            rb.velocity -= new Vector2(XTrans, YTrans);
+        else
+            rb.velocity += new Vector2(XTrans, YTrans);
         
         /*if(Input.GetKeyDown(KeyCode.N))
         {
@@ -107,11 +114,11 @@ public class PlayerBehavior : MonoBehaviour
     }
     private void DisplayEffectIcon()
     {
-        if (speed != 1.5f || lightcol.radius != 1.75f)
+        if (speed != 1.25f || lightcol.radius != 1.75f)
         {
             if (!speedDisplayed)
             {
-                if(speed != 1.5f)
+                if(speed != 1.25f)
                 {
                     if (!effectDisplay1.activeSelf)
                     {
@@ -124,7 +131,7 @@ public class PlayerBehavior : MonoBehaviour
                     else
                     {
                         effectDisplay2.SetActive(true);
-                        if (speed > 1.5f)
+                        if (speed > 1.25f)
                             effectIcon2.sprite = effectSprites[0];
                         else
                             effectIcon2.sprite = effectSprites[1];
@@ -191,7 +198,7 @@ public class PlayerBehavior : MonoBehaviour
         if(col.gameObject.tag == "BlueKey")
         {
             keyInventory[0] = true;
-            speed = 3f;
+            speed = 2f;
             playerAudio.clip = sounds[1];
             playerAudio.Play();
             Destroy(col.gameObject);
@@ -202,9 +209,6 @@ public class PlayerBehavior : MonoBehaviour
             if (cursed)
             {
                 cursed = false;
-                speed = 1.5f;
-                blindTransform.localScale = new Vector3(1.4f, 1.4f, 1f);
-                lightcol.radius = 1.75f;
             }
             playerAudio.clip = sounds[2];
             playerAudio.Play();
@@ -224,8 +228,8 @@ public class PlayerBehavior : MonoBehaviour
             keyInventory[3] = true;
             cursed = true;
             blindTransform.localScale = new Vector3(1f, 1f, 1f);
-            lightcol.radius = 1.3f;
-            speed = 0.75f;
+            //lightcol.radius = 1.3f;
+            //speed = 0.75f;
             playerAudio.clip = sounds[3];
             playerAudio.Play();
             Destroy(col.gameObject);
@@ -396,7 +400,7 @@ public class PlayerBehavior : MonoBehaviour
                 keyInventory[0] = false;
                 displayText.text = "Press 'R' to retry.";
                 RemoveColoredLocks(col.gameObject.tag);
-                speed = 1.5f;
+                speed = 1.25f;
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
                 DisableEffectIcon(0);
