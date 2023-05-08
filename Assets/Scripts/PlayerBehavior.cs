@@ -36,6 +36,7 @@ public class PlayerBehavior : MonoBehaviour
     private Image effectIcon1;
     private Image effectIcon2;
     private AudioSource playerAudio;
+    private Animator anim;
     //private Collider2D lightcol;
     // Start is called before the first frame update
     void Start()
@@ -51,6 +52,7 @@ public class PlayerBehavior : MonoBehaviour
         effectIcon2 = effectDisplay2.GetComponent<Image>();
         effectDisplay1.SetActive(false);
         effectDisplay2.SetActive(false);
+        anim = GetComponent<Animator>();
         playerAudio = GetComponent<AudioSource>();
         StartCoroutine(LoadWait());
     }
@@ -60,7 +62,9 @@ public class PlayerBehavior : MonoBehaviour
     {
         keyNumText.text = keynum.ToString();
         DisplayEffectIcon();
-        if(!isStarted && Input.GetKeyDown(KeyCode.Space) && !isLoading)
+        anim.SetFloat("xaxis", Input.GetAxis("Horizontal"));
+        anim.SetFloat("yaxis", Input.GetAxis("Vertical"));
+        if (!isStarted && Input.GetKeyDown(KeyCode.Space) && !isLoading)
         {
             displayText.text = "Press 'R' to retry.";
             spawnitems.SetWarps();
@@ -94,6 +98,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         XTrans = Input.GetAxis("Horizontal") * speed;
         YTrans = Input.GetAxis("Vertical") * speed;
+        
         //transform.position += new Vector3(XTrans, YTrans, 0);
         //transform.Translate(new Vector2(XTrans, YTrans) * Time.deltaTime);
         if(cursed)
@@ -227,7 +232,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             keyInventory[3] = true;
             cursed = true;
-            blindTransform.localScale = new Vector3(1f, 1f, 1f);
+            //blindTransform.localScale = new Vector3(1f, 1f, 1f);
             //lightcol.radius = 1.3f;
             //speed = 0.75f;
             playerAudio.clip = sounds[3];
