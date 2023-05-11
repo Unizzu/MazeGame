@@ -32,6 +32,7 @@ public class TutPlayerBehavior : MonoBehaviour
     private Collider2D lightcol;
     private Rigidbody2D rb;
     private AudioSource playeraudio;
+    private Animator anim;
     //private Collider2D lightcol;
     // Start is called before the first frame update
     void Start()
@@ -43,6 +44,7 @@ public class TutPlayerBehavior : MonoBehaviour
         lightcol = lighter.GetComponentInChildren<Collider2D>();
         lightcol.enabled = false;
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         StartCoroutine(LoadWait());
     }
 
@@ -61,6 +63,10 @@ public class TutPlayerBehavior : MonoBehaviour
             playeraudio = GetComponent<AudioSource>();
             StartCoroutine(TextCoolDown());
         }
+    }
+
+    void FixedUpdate()
+    {
         if (!goalReached && isStarted)
         {
             Move();
@@ -71,6 +77,8 @@ public class TutPlayerBehavior : MonoBehaviour
     {
         XTrans = Input.GetAxis("Horizontal") * speed;
         YTrans = Input.GetAxis("Vertical") * speed;
+        anim.SetFloat("xaxis", Input.GetAxis("Horizontal"));
+        anim.SetFloat("yaxis", Input.GetAxis("Vertical"));
         //transform.position = new Vector2(XTrans, YTrans);
         rb.velocity += new Vector2(XTrans, YTrans);
     }
