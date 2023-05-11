@@ -19,12 +19,23 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene("Stage 1");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
     void ButtonClicked()
     {
-        SceneManager.LoadScene("Stage 1");
+        if(SceneManager.GetActiveScene().buildIndex + 1 == 5)
+        {
+            foreach(GameObject musicplayer in GameObject.FindGameObjectsWithTag("Music"))
+            {
+                Destroy(musicplayer);
+            }
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }
