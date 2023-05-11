@@ -14,9 +14,12 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private GameObject blinder;
     [SerializeField] private GameObject effectDisplay1;
     [SerializeField] private GameObject effectDisplay2;
-    [SerializeField] private Sprite[] effectSprites = new Sprite[4];
-    [SerializeField] private AudioClip[] sounds = new AudioClip[9];
+    [SerializeField] private GameObject effectDisplay3;
+    [SerializeField] private Sprite[] effectSprites = new Sprite[5];
+    [SerializeField] private AudioClip[] sounds = new AudioClip[11];
     private float speed = 1.25f;
+    private float defSpeed;
+    private float defRad;
     public int keynum = 0;
     private float XTrans;
     private float YTrans;
@@ -25,8 +28,6 @@ public class PlayerBehavior : MonoBehaviour
     private bool warpCooldown = false;
     private bool isLoading = true;
     private bool cursed = false;
-    private bool speedDisplayed = false;
-    private bool lightDisplayed = false;
     private bool[] keyInventory = new bool[4];
 
     private Collider2D collid;
@@ -35,6 +36,7 @@ public class PlayerBehavior : MonoBehaviour
     private Transform blindTransform;
     private Image effectIcon1;
     private Image effectIcon2;
+    private Image effectIcon3;
     private AudioSource playerAudio;
     private Animator anim;
     //private Collider2D lightcol;
@@ -50,10 +52,14 @@ public class PlayerBehavior : MonoBehaviour
         blindTransform = blinder.GetComponent<Transform>();
         effectIcon1 = effectDisplay1.GetComponent<Image>();
         effectIcon2 = effectDisplay2.GetComponent<Image>();
+        effectIcon3 = effectDisplay3.GetComponent<Image>();
         effectDisplay1.SetActive(false);
         effectDisplay2.SetActive(false);
+        effectDisplay3.SetActive(false);
         anim = GetComponent<Animator>();
         playerAudio = GetComponent<AudioSource>();
+        defSpeed = speed;
+        defRad = lightcol.radius;
         StartCoroutine(LoadWait());
     }
 
@@ -119,77 +125,45 @@ public class PlayerBehavior : MonoBehaviour
     }
     private void DisplayEffectIcon()
     {
-        if (speed != 1.25f || lightcol.radius != 1.75f)
+        if (speed != defSpeed)
         {
-            if (!speedDisplayed)
+            if (speed > defSpeed)
             {
-                if(speed != 1.25f)
-                {
-                    if (!effectDisplay1.activeSelf)
-                    {
-                        effectDisplay1.SetActive(true);
-                        if (speed > 1.5f)
-                            effectIcon1.sprite = effectSprites[0];
-                        else
-                            effectIcon1.sprite = effectSprites[1];
-                    }
-                    else
-                    {
-                        effectDisplay2.SetActive(true);
-                        if (speed > 1.25f)
-                            effectIcon2.sprite = effectSprites[0];
-                        else
-                            effectIcon2.sprite = effectSprites[1];
-                    }
-                    speedDisplayed = true;
-                }
+                effectDisplay1.SetActive(true);
+                effectIcon1.sprite = effectSprites[0];
             }
-            if(!lightDisplayed)
+            else
             {
-                if(lightcol.radius != 1.75f)
-                {
-                    if (!effectDisplay1.activeSelf)
-                    {
-                        effectDisplay1.SetActive(true);
-                        if (lightcol.radius > 1.75f)
-                            effectIcon1.sprite = effectSprites[2];
-                        else
-                            effectIcon1.sprite = effectSprites[3];
-                    }
-                    else
-                    {
-                        effectDisplay2.SetActive(true);
-                        if (lightcol.radius > 1.75f)
-                            effectIcon2.sprite = effectSprites[2];
-                        else
-                            effectIcon2.sprite = effectSprites[3];
-                    }
-                    lightDisplayed = true;
-                }
+                effectDisplay1.SetActive(true);
+                effectIcon1.sprite = effectSprites[1];
             }
         }
         else
+            effectDisplay1.SetActive(false);
+        if(lightcol.radius != defRad)
         {
-            if (effectDisplay1.activeSelf)
-                effectDisplay1.SetActive(false);
-            if (effectDisplay2.activeSelf)
-                effectDisplay2.SetActive(false);
-            speedDisplayed = false;
-            lightDisplayed = false;
+            if (lightcol.radius > defRad)
+            {
+                effectDisplay2.SetActive(true);
+                effectIcon2.sprite = effectSprites[2];
+            }
+            else
+            {
+                effectDisplay2.SetActive(true);
+                effectIcon2.sprite = effectSprites[3];
+            }
         }
+        else
+            effectDisplay2.SetActive(false);
+        if(cursed)
+        {
+            effectDisplay3.SetActive(true);
+            effectIcon3.sprite = effectSprites[4];
+        }
+        else
+            effectDisplay3.SetActive(false);
     }
 
-    private void DisableEffectIcon(int index)
-    {
-        if (effectDisplay1.activeSelf && effectIcon1.sprite == effectSprites[index])
-            effectDisplay1.SetActive(false);
-        if (effectDisplay2.activeSelf && effectIcon2.sprite == effectSprites[index])
-            effectDisplay2.SetActive(false);
-        if(index <= 1)
-            speedDisplayed = false;
-        else
-            lightDisplayed = false;
-    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -267,11 +241,15 @@ public class PlayerBehavior : MonoBehaviour
                 if(stb.giveEffect())
                 {
                     speed += 0.5f;
+                    playerAudio.clip = sounds[9];
+                    playerAudio.Play();
                     StartCoroutine(tileSpeedUp());
                 }
                 else
                 {
                     speed -= 0.5f;
+                    playerAudio.clip = sounds[10];
+                    playerAudio.Play();
                     StartCoroutine(tileSpeedDown());
                 }
             }
@@ -284,14 +262,18 @@ public class PlayerBehavior : MonoBehaviour
             {
                 if(ltb.giveEffect())
                 {
-                    blindTransform.localScale += new Vector3(0.2f, 0.2f, 1f);
-                    lightcol.radius += 0.225f;
+                    blindTransform.localScale += new Vector3(0.3f, 0.3f, 1f);
+                    lightcol.radius += 0.3f;
+                    playerAudio.clip = sounds[9];
+                    playerAudio.Play();
                     StartCoroutine(tileLightUp());
                 }
                 else
                 {
-                    blindTransform.localScale -= new Vector3(0.2f, 0.2f, 1f);
-                    lightcol.radius -= 0.225f;
+                    blindTransform.localScale -= new Vector3(0.35f, 0.35f, 1f);
+                    lightcol.radius -= 0.4f;
+                    playerAudio.clip = sounds[10];
+                    playerAudio.Play();
                     StartCoroutine(tileLightDown());
                 }
             }
@@ -408,7 +390,6 @@ public class PlayerBehavior : MonoBehaviour
                 speed = 1.25f;
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
-                DisableEffectIcon(0);
             }
         }
         if (col.gameObject.tag == "GreenLock" && keyInventory[1])
@@ -433,7 +414,6 @@ public class PlayerBehavior : MonoBehaviour
                 lightcol.radius = 1.75f;
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
-                DisableEffectIcon(2);
                 spawnitems.LightUpBlocks();
             }
         }
@@ -495,14 +475,14 @@ public class PlayerBehavior : MonoBehaviour
     IEnumerator tileLightUp()
     {
         yield return new WaitForSeconds(5.0f);
-        blindTransform.localScale -= new Vector3(0.2f, 0.2f, 1f);
-        lightcol.radius -= 0.225f;
+        blindTransform.localScale -= new Vector3(0.3f, 0.3f, 1f);
+        lightcol.radius -= 0.3f;
     }
 
     IEnumerator tileLightDown()
     {
         yield return new WaitForSeconds(5.0f);
-        blindTransform.localScale += new Vector3(0.2f, 0.2f, 1f);
-        lightcol.radius += 0.225f;
+        blindTransform.localScale += new Vector3(0.35f, 0.35f, 1f);
+        lightcol.radius += 0.4f;
     }
 }
