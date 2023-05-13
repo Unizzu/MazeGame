@@ -78,6 +78,7 @@ public class SpawnItems : MonoBehaviour
                         case "goal 1":
                             SpawnPos = tm.GetCellCenterWorld(new Vector3Int(x, y, 0));
                             Instantiate(goalTile, SpawnPos, Quaternion.identity, itemGroup);
+                            Instantiate(pathTile, SpawnPos, Quaternion.identity, tileGroup);
                             tm.SetTile(new Vector3Int(x, y, 0), null);
                             break;
                         case "tile 1":

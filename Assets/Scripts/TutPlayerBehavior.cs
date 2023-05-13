@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class TutPlayerBehavior : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class TutPlayerBehavior : MonoBehaviour
     [SerializeField] private TMP_Text keyNumText;
     [SerializeField] private GameObject lighter;
     [SerializeField] private AudioClip[] sounds = new AudioClip[4];
-    public float speed = 1.5f;
+    private float speed = 1.15f;
     public int keynum = 0;
     private float XTrans;
     private float YTrans;
@@ -31,6 +32,7 @@ public class TutPlayerBehavior : MonoBehaviour
     private Collider2D collid;
     private Collider2D lightcol;
     private Rigidbody2D rb;
+    private Vector3 goalPos;
     private AudioSource playeraudio;
     private Animator anim;
     //private Collider2D lightcol;
@@ -45,6 +47,7 @@ public class TutPlayerBehavior : MonoBehaviour
         lightcol.enabled = false;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        
         StartCoroutine(LoadWait());
     }
 
@@ -70,6 +73,15 @@ public class TutPlayerBehavior : MonoBehaviour
         if (!goalReached && isStarted)
         {
             Move();
+        }
+        else if (goalReached)
+        {
+            transform.position = goalPos;
+            anim.SetBool("GoalReached", true);
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
         }
     }
 
@@ -100,11 +112,15 @@ public class TutPlayerBehavior : MonoBehaviour
         }
         if (col.gameObject.tag == "Goal")
         {
+            goalPos = col.transform.position;
             goalReached = true;
             playeraudio.clip = sounds[3];
             playeraudio.Play();
-            bottomDisplayText.text = " ";
-            uibehavior.activateGoalUI();
+            topDisplayText.text = "You reached the Goal!";
+            bottomDisplayText.fontSize = 22;
+            bottomDisplayText.text = "Now you are ready to challenge the Dark Mazes. \n" +
+                "Press Space to go to Stage 1.";
+            //uibehavior.activateGoalUI();
         }
         if (col.gameObject.tag == "RedWarp" || col.gameObject.tag == "BlueWarp")
         {
@@ -250,7 +266,7 @@ public class TutPlayerBehavior : MonoBehaviour
 
     IEnumerator TextCoolDown()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(4.0f);
         topDisplayText.text = "";
         topDisplayText.fontSize = 30;
     }

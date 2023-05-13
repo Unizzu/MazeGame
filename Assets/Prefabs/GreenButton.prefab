@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetColor: Green
+  ButtonColor: Green
 --- !u!61 &3877857089712139079
 BoxCollider2D:
   m_ObjectHideFlags: 0

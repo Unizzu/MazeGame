@@ -17,7 +17,7 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private GameObject effectDisplay3;
     [SerializeField] private Sprite[] effectSprites = new Sprite[5];
     [SerializeField] private AudioClip[] sounds = new AudioClip[11];
-    private float speed = 1.25f;
+    private float speed = 1.15f;
     private float defSpeed;
     private float defRad;
     public int keynum = 0;
@@ -34,6 +34,7 @@ public class PlayerBehavior : MonoBehaviour
     private CircleCollider2D lightcol;
     private Rigidbody2D rb;
     private Transform blindTransform;
+    private Vector3 goalPos;
     private Image effectIcon1;
     private Image effectIcon2;
     private Image effectIcon3;
@@ -60,6 +61,7 @@ public class PlayerBehavior : MonoBehaviour
         playerAudio = GetComponent<AudioSource>();
         defSpeed = speed;
         defRad = lightcol.radius;
+        
         StartCoroutine(LoadWait());
     }
 
@@ -97,6 +99,11 @@ public class PlayerBehavior : MonoBehaviour
         if (!goalReached && isStarted)
         {
             Move();
+        }
+        else if(goalReached)
+        {
+            transform.position = goalPos;
+            anim.SetBool("GoalReached", true);
         }
     }
 
@@ -177,7 +184,7 @@ public class PlayerBehavior : MonoBehaviour
         if(col.gameObject.tag == "BlueKey")
         {
             keyInventory[0] = true;
-            speed = 2f;
+            speed = 1.8f;
             playerAudio.clip = sounds[1];
             playerAudio.Play();
             Destroy(col.gameObject);
@@ -216,6 +223,7 @@ public class PlayerBehavior : MonoBehaviour
         }
         if(col.gameObject.tag == "Goal")
         {
+            goalPos = col.transform.position;
             goalReached = true;
             displayText.text = " ";
             playerAudio.clip = sounds[7];
@@ -387,7 +395,7 @@ public class PlayerBehavior : MonoBehaviour
                 keyInventory[0] = false;
                 displayText.text = "Press 'R' to retry.";
                 RemoveColoredLocks(col.gameObject.tag);
-                speed = 1.25f;
+                speed = defSpeed;
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
             }
