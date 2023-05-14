@@ -21,6 +21,14 @@ public class UIManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            foreach (GameObject musicplayer in GameObject.FindGameObjectsWithTag("Music"))
+            {
+                Destroy(musicplayer);
+            }
+            SceneManager.LoadScene(0);
+        }
     }
 
     void ButtonClicked()

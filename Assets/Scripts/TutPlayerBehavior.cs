@@ -146,9 +146,10 @@ public class TutPlayerBehavior : MonoBehaviour
             playeraudio.Play();
             if (!interactedButton)
             {
-                topDisplayText.fontSize = 25;
+                topDisplayText.fontSize = 21;
                 topDisplayText.text = "You pressed a button!\n" +
-                    "Buttons can activate or deactivate blocks on their corresponding color.";
+                    "Buttons can activate or deactivate blocks \n" +
+                    "on their corresponding color.";
                 StartCoroutine(TextCoolDown());
                 interactedButton = true;
             }
@@ -271,7 +272,7 @@ public class TutPlayerBehavior : MonoBehaviour
 
     IEnumerator TextCoolDown()
     {
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(3.2f);
         topDisplayText.text = "";
         topDisplayText.fontSize = 30;
     }
