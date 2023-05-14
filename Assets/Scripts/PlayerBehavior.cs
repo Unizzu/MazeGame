@@ -8,6 +8,7 @@ public class PlayerBehavior : MonoBehaviour
 {
     [SerializeField] private UIBehavior uibehavior;
     [SerializeField] private SpawnItems spawnitems;
+    [SerializeField] private Camera PlayerCamera;
     [SerializeField] private TMP_Text displayText;
     [SerializeField] private TMP_Text keyNumText;
     [SerializeField] private GameObject lighter;
@@ -17,6 +18,8 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private GameObject effectDisplay3;
     [SerializeField] private Sprite[] effectSprites = new Sprite[5];
     [SerializeField] private AudioClip[] sounds = new AudioClip[11];
+    [SerializeField] private GameObject InstructionsCanvas;
+    [SerializeField] private GameObject[] KeyIcons = new GameObject[4];
     private float speed = 1.15f;
     private float defSpeed;
     private float defRad;
@@ -61,7 +64,10 @@ public class PlayerBehavior : MonoBehaviour
         playerAudio = GetComponent<AudioSource>();
         defSpeed = speed;
         defRad = lightcol.radius;
-        
+        foreach (GameObject keyicons in KeyIcons)
+        {
+            keyicons.SetActive(false);
+        }
         StartCoroutine(LoadWait());
     }
 
@@ -75,6 +81,7 @@ public class PlayerBehavior : MonoBehaviour
         if (!isStarted && Input.GetKeyDown(KeyCode.Space) && !isLoading)
         {
             displayText.text = "Press 'R' to retry.";
+            InstructionsCanvas.SetActive(false);
             spawnitems.SetWarps();
             collid.enabled = true;
             lightcol.enabled = true;
@@ -104,6 +111,8 @@ public class PlayerBehavior : MonoBehaviour
         {
             transform.position = goalPos;
             anim.SetBool("GoalReached", true);
+            lightcol.radius = 1000f;
+            blinder.SetActive(false);
         }
     }
 
@@ -132,43 +141,52 @@ public class PlayerBehavior : MonoBehaviour
     }
     private void DisplayEffectIcon()
     {
-        if (speed != defSpeed)
+        if(!goalReached)
         {
-            if (speed > defSpeed)
+            if (speed != defSpeed)
             {
-                effectDisplay1.SetActive(true);
-                effectIcon1.sprite = effectSprites[0];
+                if (speed > defSpeed)
+                {
+                    effectDisplay1.SetActive(true);
+                    effectIcon1.sprite = effectSprites[0];
+                }
+                else
+                {
+                    effectDisplay1.SetActive(true);
+                    effectIcon1.sprite = effectSprites[1];
+                }
             }
             else
+                effectDisplay1.SetActive(false);
+            if (lightcol.radius != defRad)
             {
-                effectDisplay1.SetActive(true);
-                effectIcon1.sprite = effectSprites[1];
+                if (lightcol.radius > defRad)
+                {
+                    effectDisplay2.SetActive(true);
+                    effectIcon2.sprite = effectSprites[2];
+                }
+                else
+                {
+                    effectDisplay2.SetActive(true);
+                    effectIcon2.sprite = effectSprites[3];
+                }
             }
+            else
+                effectDisplay2.SetActive(false);
+            if (cursed)
+            {
+                effectDisplay3.SetActive(true);
+                effectIcon3.sprite = effectSprites[4];
+            }
+            else
+                effectDisplay3.SetActive(false);
         }
         else
+        {
             effectDisplay1.SetActive(false);
-        if(lightcol.radius != defRad)
-        {
-            if (lightcol.radius > defRad)
-            {
-                effectDisplay2.SetActive(true);
-                effectIcon2.sprite = effectSprites[2];
-            }
-            else
-            {
-                effectDisplay2.SetActive(true);
-                effectIcon2.sprite = effectSprites[3];
-            }
-        }
-        else
             effectDisplay2.SetActive(false);
-        if(cursed)
-        {
-            effectDisplay3.SetActive(true);
-            effectIcon3.sprite = effectSprites[4];
-        }
-        else
             effectDisplay3.SetActive(false);
+        }
     }
 
 
@@ -184,6 +202,7 @@ public class PlayerBehavior : MonoBehaviour
         if(col.gameObject.tag == "BlueKey")
         {
             keyInventory[0] = true;
+            KeyIcons[0].SetActive(true);
             speed = 1.8f;
             playerAudio.clip = sounds[1];
             playerAudio.Play();
@@ -192,6 +211,7 @@ public class PlayerBehavior : MonoBehaviour
         if (col.gameObject.tag == "GreenKey")
         {
             keyInventory[1] = true;
+            KeyIcons[1].SetActive(true);
             if (cursed)
             {
                 cursed = false;
@@ -203,6 +223,7 @@ public class PlayerBehavior : MonoBehaviour
         if (col.gameObject.tag == "YellowKey")
         {
             keyInventory[2] = true;
+            KeyIcons[2].SetActive(true);
             blindTransform.localScale = new Vector3(1.8f, 1.8f, 1f);
             lightcol.radius = 2.2f;
             playerAudio.clip = sounds[4];
@@ -212,6 +233,7 @@ public class PlayerBehavior : MonoBehaviour
         if (col.gameObject.tag == "RedKey")
         {
             keyInventory[3] = true;
+            KeyIcons[3].SetActive(true);
             cursed = true;
             //blindTransform.localScale = new Vector3(1f, 1f, 1f);
             //lightcol.radius = 1.3f;
@@ -225,9 +247,10 @@ public class PlayerBehavior : MonoBehaviour
         {
             goalPos = col.transform.position;
             goalReached = true;
-            displayText.text = " ";
+            displayText.gameObject.SetActive(false);
             playerAudio.clip = sounds[7];
             playerAudio.Play();
+            PlayerCamera.backgroundColor = new Color32(34, 34, 34, 255);
             uibehavior.activateGoalUI();
         }
         if (col.gameObject.tag == "RedWarp" || col.gameObject.tag == "BlueWarp" || col.gameObject.tag == "YellowWarp" || col.gameObject.tag == "GreenWarp")
@@ -278,8 +301,8 @@ public class PlayerBehavior : MonoBehaviour
                 }
                 else
                 {
-                    blindTransform.localScale -= new Vector3(0.35f, 0.35f, 1f);
-                    lightcol.radius -= 0.4f;
+                    blindTransform.localScale -= new Vector3(0.65f, 0.65f, 1f);
+                    lightcol.radius -= 0.75f;
                     playerAudio.clip = sounds[10];
                     playerAudio.Play();
                     StartCoroutine(tileLightDown());
@@ -397,6 +420,7 @@ public class PlayerBehavior : MonoBehaviour
                 RemoveColoredLocks(col.gameObject.tag);
                 speed = defSpeed;
                 playerAudio.clip = sounds[5];
+                KeyIcons[0].SetActive(false);
                 playerAudio.Play();
             }
         }
@@ -408,6 +432,7 @@ public class PlayerBehavior : MonoBehaviour
                 displayText.text = "Press 'R' to retry.";
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
+                KeyIcons[1].SetActive(false);
                 RemoveColoredLocks(col.gameObject.tag);
             }
         }
@@ -422,6 +447,7 @@ public class PlayerBehavior : MonoBehaviour
                 lightcol.radius = 1.75f;
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
+                KeyIcons[2].SetActive(false);
                 spawnitems.LightUpBlocks();
             }
         }
@@ -434,6 +460,7 @@ public class PlayerBehavior : MonoBehaviour
                 playerAudio.clip = sounds[5];
                 playerAudio.Play();
                 spawnitems.CurseCall();
+                KeyIcons[3].SetActive(false);
                 RemoveColoredLocks(col.gameObject.tag);
             }
         }
@@ -490,7 +517,7 @@ public class PlayerBehavior : MonoBehaviour
     IEnumerator tileLightDown()
     {
         yield return new WaitForSeconds(5.0f);
-        blindTransform.localScale += new Vector3(0.35f, 0.35f, 1f);
-        lightcol.radius += 0.4f;
+        blindTransform.localScale += new Vector3(0.65f, 0.65f, 1f);
+        lightcol.radius += 0.75f;
     }
 }

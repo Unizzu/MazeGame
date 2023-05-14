@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
 
     void ButtonClicked()
     {
-        if(SceneManager.GetActiveScene().buildIndex + 1 == 5)
+        if(SceneManager.GetActiveScene().buildIndex + 1 == 6)
         {
             foreach(GameObject musicplayer in GameObject.FindGameObjectsWithTag("Music"))
             {

@@ -13,6 +13,8 @@ public class TutPlayerBehavior : MonoBehaviour
     [SerializeField] private TMP_Text bottomDisplayText;
     [SerializeField] private TMP_Text keyNumText;
     [SerializeField] private GameObject lighter;
+    [SerializeField] private GameObject topBorder;
+    [SerializeField] private GameObject ObjectiveText;
     [SerializeField] private AudioClip[] sounds = new AudioClip[4];
     private float speed = 1.15f;
     public int keynum = 0;
@@ -47,7 +49,7 @@ public class TutPlayerBehavior : MonoBehaviour
         lightcol.enabled = false;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        
+        topBorder.SetActive(false);
         StartCoroutine(LoadWait());
     }
 
@@ -64,6 +66,8 @@ public class TutPlayerBehavior : MonoBehaviour
             lightcol.enabled = true;
             isStarted = true;
             playeraudio = GetComponent<AudioSource>();
+            topBorder.SetActive(true);
+            ObjectiveText.SetActive(false);
             StartCoroutine(TextCoolDown());
         }
     }
@@ -78,7 +82,8 @@ public class TutPlayerBehavior : MonoBehaviour
         {
             transform.position = goalPos;
             anim.SetBool("GoalReached", true);
-            if(Input.GetKeyDown(KeyCode.Space))
+            topDisplayText.text = "You reached the Goal!";
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
@@ -116,7 +121,7 @@ public class TutPlayerBehavior : MonoBehaviour
             goalReached = true;
             playeraudio.clip = sounds[3];
             playeraudio.Play();
-            topDisplayText.text = "You reached the Goal!";
+            
             bottomDisplayText.fontSize = 22;
             bottomDisplayText.text = "Now you are ready to challenge the Dark Mazes. \n" +
                 "Press Space to go to Stage 1.";

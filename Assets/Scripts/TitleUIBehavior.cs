@@ -18,7 +18,7 @@ public class TitleUIBehavior : MonoBehaviour
     void Start()
     {
         playButton.onClick.AddListener(PlayButtonClicked);
-        tutButton.onClick.AddListener(TutButtonClicked);
+        //tutButton.onClick.AddListener(TutButtonClicked);
     }
 
     // Update is called once per frame
@@ -29,10 +29,10 @@ public class TitleUIBehavior : MonoBehaviour
 
     void PlayButtonClicked()
     {
-        SceneManager.LoadScene("Stage Level 1");
+        SceneManager.LoadScene("Stage Select");
     }
-    void TutButtonClicked()
+    /*void TutButtonClicked()
     {
         SceneManager.LoadScene("Tutorial");
-    }
+    }*/
 }

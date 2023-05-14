@@ -16,7 +16,7 @@ public class MusicPlayer : MonoBehaviour
         musicSource = GetComponent<AudioSource>();
         musicSource.clip = musics[0];
         musicSource.loop = true;
-        musicSource.volume = 0.75f;
+        musicSource.volume = 0.70f;
         titleMusicPlayed = true;
         musicSource.Play();
     }
@@ -24,7 +24,7 @@ public class MusicPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(SceneManager.GetActiveScene().buildIndex > 1 && !stageMusicPlayed)
+        if(SceneManager.GetActiveScene().buildIndex > 2 && !stageMusicPlayed)
         {
             if(musicSource.isPlaying)
             {
@@ -39,7 +39,7 @@ public class MusicPlayer : MonoBehaviour
                 
             }
         }
-        else if(SceneManager.GetActiveScene().buildIndex <= 1 && !titleMusicPlayed)
+        else if(SceneManager.GetActiveScene().buildIndex <= 2 && !titleMusicPlayed)
         {
             musicSource.clip = musics[0];
             titleMusicPlayed = true;
